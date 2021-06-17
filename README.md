@@ -1,6 +1,6 @@
 # StarAPI
 
-Api used to connect to ProStocks StarUAT
+Api used to connect to StarUAT
 ****
 
 ## Build
