@@ -1,6 +1,8 @@
 from StarWebApiUAT.StarApi import StarApi 
 import logging
 import time
+import yaml
+
 logging.basicConfig(level=logging.DEBUG)
 
 socket_opened = False
@@ -33,16 +35,20 @@ def open_callback():
 
 api = StarApi()
 
-user    = <uid>
-pwd     = <password>
-factor2 = <2nd factor>
-vc      = <vendor code>
-apikey  = <secret key>
-imei    = <imei>
+#user    = <uid>
+#pwd     = <password>
+#factor2 = <2nd factor>
+#vc      = <vendor code>
+#apikey  = <secret key>
+#imei    = <imei>
 
-ret = api.login(userid = user, password = pwd, twoFA=factor2, vendor_code=vc, api_secret=apikey, imei=imei)
+#ret = api.login(userid = user, password = pwd, twoFA=factor2, vendor_code=vc, api_secret=apikey, imei=imei)
 
+with open('cred.yml') as f:
+    cred = yaml.load(f, Loader=yaml.FullLoader)
+    print(cred)
 
+ret = api.login(userid = cred['user'], password = cred['pwd'], twoFA=cred['factor2'], vendor_code=cred['vc'], api_secret=cred['apikey'], imei=cred['imei'])
 
 if ret != None:
     api.start_websocket(subscribe_callback=event_handler_quote_update, socket_open_callback=open_callback)
