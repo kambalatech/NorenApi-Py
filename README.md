@@ -45,7 +45,7 @@ send a list of instruments to stop watch
 
 
 ```python
-from StarWebApi.StarApi import StarApi 
+from StarWebApiUAT.StarApi import StarApi 
 
 socket_opened = False
 
