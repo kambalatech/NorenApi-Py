@@ -45,7 +45,7 @@ place an order to oms
 | tradingsymbol | ```string``` | False | Unique id of contract on which order to be placed. (use url encoding to avoid special char error for symbols like M&M |
 | quantity | ```integer``` | False | order quantity   |
 | discloseqty | ```integer``` | False | order disc qty |
-| price_type | ```string```| False | PriceType enum class |
+| price_type | ```enum```| False | PriceType enum class |
 | price | ```integer```| False | Price in paise, 100.00 is sent as 10000 |
 | trigger_price | ```integer```| False | Price in paise |
 | retention | ```string```| False | DAY / IOC / EOS |
@@ -61,7 +61,7 @@ modify the quantity pricetype or price of an order
 | exchange | ```string``` | False | Exchange NSE  / NFO / BSE / CDS |
 | tradingsymbol | ```string``` | False | Unique id of contract on which order to be placed. (use url encoding to avoid special char error for symbols like M&M |
 | newquantity | ```integer``` | False | new order quantity   |
-| newprice_type | ```string```| False | PriceType enum class |
+| newprice_type | ```enum```| False | PriceType enum class |
 | newprice | ```integer```| False | Price in paise, 100.00 is sent as 10000 |
 | newtrigger_price | ```integer```| False | Price in paise |
 
