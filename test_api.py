@@ -1,9 +1,11 @@
 from StarWebApiUAT.StarApi import StarApi, PriceType, BuyorSell, ProductType
+import datetime
 import logging
 import time
 import yaml
+import pandas as pd
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 
 #flag to tell us if the websocket is open
 socket_opened = False
@@ -38,6 +40,11 @@ def open_callback():
 
 #end of callbacks
 
+def get_time(time_string):
+    data = time.strptime(time_string,'%d-%m-%Y %H:%M:%S')
+
+    return time.mktime(data)
+
 #start of our program
 api = StarApi()
 
@@ -64,7 +71,9 @@ if ret != None:
         print('m => modify order')
         print('c => cancel order')
         print('o => get order book')
+        print('v => get 1 min market data')
         print('s => start_websocket')
+        print('q => quit')
 
         prompt1=input('what shall we do? ').lower()        
             
@@ -90,6 +99,18 @@ if ret != None:
             ret = api.get_order_book()
             print(ret)
 
+        elif prompt1 == 'v':
+            start_time = "09-07-2021 00:00:00"
+            end_time = time.time()
+            
+            start_secs = get_time(start_time)
+
+            ret = api.get_time_price_series(exchange='NSE', token='22', starttime=start_secs, endtime=end_time)
+            
+            df = pd.DataFrame.from_dict(ret)
+
+            print(df)            
+        
         elif prompt1 == 's':
             if socket_opened == True:
                 print('websocket already opened')
