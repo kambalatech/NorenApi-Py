@@ -1,6 +1,6 @@
-# StarAPI
+# NorenApi
 
-Api used to connect to StarUAT
+Api used to connect to NorenOMS
 ****
 
 ## Build
@@ -13,7 +13,7 @@ to build this package and install it on your server please use
 ****
 
 ## API 
-class  ```StarApi```
+class  ```NorenApi```
 - [login](#md-login)
 - [place_order](#md-place_order)
 - [modify_order](#md-place_order)
@@ -101,7 +101,7 @@ send a list of instruments to stop watch
 
 
 ```python
-from StarWebApiUAT.StarApi import StarApi 
+from NorenRestApiPy.NorenApi import NorenApi 
 
 socket_opened = False
 
@@ -118,8 +118,9 @@ def open_callback():
     api.subscribe(['NSE|22', 'BSE|522032'])
 
 ######################################################################
-
-api = StarApi()
+hosturl = 'http://hostname'
+websocketurl = 'wss://websock'
+api = NorenApi(host=hosturl,websocket=websocketurl)
 
 ret = api.login(userid = <user>, password = <pwd>, twoFA=<factor2>, vendor_code=<vc>, api_secret=<apikey>, imei=<imei>)
 

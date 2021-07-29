@@ -1,4 +1,5 @@
 requests
 websocket_client
-./dist/StarWebApiUAT-0.0.3-py2.py3-none-any.whl
+./dist/NorenRestApiPy-0.0.1-py2.py3-none-any.whl
 pandas
+pyyaml
