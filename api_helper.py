@@ -18,7 +18,7 @@ def get_time(time_string):
 
 class NorenApiPy(NorenApi):
     def __init__(self):
-        NorenApi.__init__(self, host='https://starapiuat.prostocks.com/NorenWClientTP', websocket='wss://starapiuat.prostocks.com/NorenWSTP/')
+        NorenApi.__init__(self, host='http://kurma.kambala.co.in:9957/NorenWClient/', websocket='wss://kurma.kambala.co.in/NorenWSTP/')
 
     symboldata = {}
 
@@ -43,7 +43,7 @@ class NorenApiPy(NorenApi):
         exchange = item.key[0]
         token    = item.key[1]
 
-        if item.df.count() is not 0:
+        if item.df.count() != 0:
             lasttime    = item.df['time'].values[0]
             starttime   = get_time(lasttime)
 
@@ -73,7 +73,7 @@ class NorenApiPy(NorenApi):
         df = pd.DataFrame.from_dict(ret)        
         df.set_index('ssboe')
         #print(df)
-        if len(self.symboldata) is 0:
+        if len(self.symboldata) == 0:
             #need to get close to 00 min
             self.timer = Timer(5,self.refresh_symbols,args=[])
             self.timer.start()
