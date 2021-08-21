@@ -1,4 +1,4 @@
 requests
 websocket_client
-./dist/NorenRestApiPy-0.0.1-py2.py3-none-any.whl
+./dist/NorenRestApiPy-0.0.2-py2.py3-none-any.whl
 pandas
