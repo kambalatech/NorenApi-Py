@@ -37,7 +37,7 @@ def open_callback():
     socket_opened = True
     print('app is connected')
     api.subscribe_orders()
-    #api.subscribe('NSE|22')
+    api.subscribe('NSE|22')
     #api.subscribe(['NSE|22', 'BSE|522032'])
 
 #end of callbacks
@@ -69,6 +69,8 @@ if ret != None:
         print('m => modify order')
         print('c => cancel order')
         print('o => get order book')
+        print('h => get holdings')
+        print('k => get positions')
         print('v => get 1 min market data')
         print('s => start_websocket')
         print('q => quit')
@@ -95,6 +97,14 @@ if ret != None:
 
         elif prompt1 == 'o':            
             ret = api.get_order_book()
+            print(ret)
+
+        elif prompt1 == 'h':            
+            ret = api.get_holdings()
+            print(ret)
+
+        elif prompt1 == 'k':            
+            ret = api.get_positions()
             print(ret)
 
         elif prompt1 == 'v':         

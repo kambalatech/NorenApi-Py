@@ -18,8 +18,9 @@ def get_time(time_string):
 
 class NorenApiPy(NorenApi):
     def __init__(self):
-        NorenApi.__init__(self, host='https://starapiuat.prostocks.com/NorenWClientTP', websocket='wss://starapiuat.prostocks.com/NorenWSTP/')
-
+        #NorenApi.__init__(self, host='https://starapiuat.prostocks.com/NorenWClientTP', websocket='wss://starapiuat.prostocks.com/NorenWSTP/')
+        NorenApi.__init__(self, host='http://kurma.kambala.co.in:9957/NorenWClient/', websocket='wss://www.kambala.co.in/NorenWSWeb/')
+        
     symboldata = {}
 
     def watch_time_price_series(self,exchange, token, starttime = None):
