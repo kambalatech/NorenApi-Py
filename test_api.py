@@ -15,7 +15,7 @@ user    = <uid>
 pwd     = <password>
 factor2 = <2nd factor>
 vc      = <vendor code>
-apikey  = <secret key>
+app_key = <secret key>
 imei    = <imei>
 
 #make the api call

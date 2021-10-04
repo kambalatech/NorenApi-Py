@@ -160,8 +160,6 @@ vc          = 'vendor code'
 app_key     = 'secret key'
 imei        = 'uniq identifier'
 
-u_app_key='{0}|{1}'.format(user,api_secret)
-
 ret = api.login(userid=user, password=pwd, twoFA=factor2, vendor_code=vc, api_secret=app_key, imei=imei)
 print(ret)
 ```

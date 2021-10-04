@@ -68,6 +68,8 @@ if ret != None:
         print('m => modify order')
         print('c => cancel order')
         print('o => get order book')
+        print('h => get holdings')
+        print('k => get positions')
         print('s => start_websocket')
         print('q => quit')
 
@@ -94,7 +96,14 @@ if ret != None:
         elif prompt1 == 'o':            
             ret = api.get_order_book()
             print(ret)
-        
+
+        elif prompt1 == 'h':            
+            ret = api.get_holdings()
+            print(ret)
+
+        elif prompt1 == 'k':            
+            ret = api.get_positions()
+            print(ret)
         elif prompt1 == 's':
             if socket_opened == True:
                 print('websocket already opened')
