@@ -13,11 +13,12 @@ to build this package and install it on your server please use
 ****
 
 ## API 
-class  ```NorenApi```
+class  ```StarApi```
 - [login](#md-login)
 - [place_order](#md-place_order)
-- [modify_order](#md-place_order)
-- [cancel_order](#md-place_order)
+- [modify_order](#md-modify_order)
+- [cancel_order](#md-cancel_order)
+- [searchscrip](#md-searchscrip)
 - [start_websocket](#md-start_websocket)
 - [subscribe](#md-subscribe)
 - [unsubscribe](#md-unsubscribe)
@@ -72,6 +73,30 @@ cancel an order
 | --- | --- | --- | ---|
 | orderno | ```string``` | False | orderno with status open |
 
+#### <a name="md-searchscrip"></a> searchscrip(exchange, searchtext):
+search for scrip or contract and its properties 
+
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
+| exchange | ```string``` | True | Exchange NSE  / NFO / BSE / CDS |
+| searchtext | ```string``` | True | Search Text ie partial or complete text ex: INFY-EQ, INF.. |
+
+the response is as follows,
+
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
+| stat | ```string``` | True | ok or Not_ok |
+| values | ```string``` | True | properties of the scrip |
+| emsg | ```string``` | False | Error Message |
+
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
+| exch | ```string``` | True | Exchange NSE  / NFO / BSE / CDS |
+| tsym | ```string``` | True | Trading Symbol is the readable Unique id of contract/scrip |
+| token | ```string``` | True | Unique Code of contract/scrip |
+| pp | ```string``` | True | price precision, in case of cds its 4 ie 100.1234 |
+| ti | ```string``` | True | tick size minimum increments of paise for price  |
+| ls | ```string``` | True | Lot Size |
 
 #### <a name="md-start_websocket"></a> start_websocket()
 starts the websocket
@@ -101,33 +126,33 @@ send a list of instruments to stop watch
 
 
 ```python
-from NorenRestApiPy.NorenApi import NorenApi 
+from NorenRestApiPy.NorenApi import PriceType, BuyorSell, ProductType
+from api_helper import NorenApiPy, get_time
+import logging
+import time
+import pandas as pd
+import hashlib
 
-socket_opened = False
+#keep in debug level to see api logs
+logging.basicConfig(level=logging.DEBUG)
 
-####callbacks of client application
+#start of our program
+api = NorenApiPy()
 
-def event_handler_quote_update(message):
-    print(message)
+#credentials
+user    = <uid>
+pwd     = <password>
+factor2 = <2nd factor>
+vc      = <vendor code>
+apikey  = <secret key>
+imei    = <imei>
 
-def open_callback():
-    global socket_opened
-    socket_opened = True
-    print('app is connected')
-    api.subscribe('CDS|100')
-    api.subscribe(['NSE|22', 'BSE|522032'])
+#Convert to SHA 256 for password and app key
+pwd = hashlib.sha256(u_pwd.encode('utf-8')).hexdigest()
+app_key=hashlib.sha256(u_app_key.encode('utf-8')).hexdigest()
 
-######################################################################
-hosturl = 'http://hostname'
-websocketurl = 'wss://websock'
-api = NorenApi(host=hosturl,websocket=websocketurl)
-
-ret = api.login(userid = <user>, password = <pwd>, twoFA=<factor2>, vendor_code=<vc>, api_secret=<apikey>, imei=<imei>)
-
-
-
-if ret == None:
-    api.start_websocket(subscribe_callback=event_handler_quote_update, socket_open_callback=open_callback)
+ret = api.login(userid=uid, password=pwd, twoFA=factor2, vendor_code=vc, api_secret=app_key, imei=imei)
+print(ret)
 ```
 
 ****

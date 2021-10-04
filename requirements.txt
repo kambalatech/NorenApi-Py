@@ -1,5 +1,10 @@
 requests
 websocket_client
+<<<<<<< HEAD
 ./dist/NorenRestApiPy-0.0.6-py2.py3-none-any.whl
 pandas
 pyyaml
+=======
+./dist/NorenRestApiPy-0.0.2-py2.py3-none-any.whl
+pandas
+>>>>>>> 54c76307c4d6d433845358058d203d224198cb01

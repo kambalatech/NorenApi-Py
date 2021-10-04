@@ -1,11 +1,13 @@
 from NorenRestApiPy.NorenApi import PriceType, BuyorSell, ProductType
 from api_helper import NorenApiPy, get_time
+import datetime
 import logging
-import hashlib
+import time
+import yaml
+import pandas as pd
 
 logging.basicConfig(level=logging.DEBUG)
 
-<<<<<<< HEAD
 #flag to tell us if the websocket is open
 socket_opened = False
 
@@ -33,7 +35,7 @@ def open_callback():
     global socket_opened
     socket_opened = True
     print('app is connected')
-    api.subscribe_orders()
+    #api.subscribe_orders()
     api.subscribe('NSE|22')
     #api.subscribe(['NSE|22', 'BSE|522032'])
 
@@ -66,9 +68,6 @@ if ret != None:
         print('m => modify order')
         print('c => cancel order')
         print('o => get order book')
-        print('h => get holdings')
-        print('k => get positions')
-        print('v => get 1 min market data')
         print('s => start_websocket')
         print('q => quit')
 
@@ -95,35 +94,15 @@ if ret != None:
         elif prompt1 == 'o':            
             ret = api.get_order_book()
             print(ret)
-
-        elif prompt1 == 'h':            
-            ret = api.get_holdings()
+        
+        elif prompt1 == 's':
+            if socket_opened == True:
+                print('websocket already opened')
+                continue
+            ret = api.start_websocket(order_update_callback=event_handler_order_update, subscribe_callback=event_handler_quote_update, socket_open_callback=open_callback)
             print(ret)
+        else:
+            print('Fin') #an answer that wouldn't be yes or no
+            break
 
-        elif prompt1 == 'k':            
-            ret = api.get_positions()
-            print(ret)
-
-        elif prompt1 == 'v':         
-            
-=======
-#start of our program
-api = NorenApiPy()
-
-#credentials
-user        = '< user id>'
-u_pwd       = '< password >'
-factor2     = 'second factor'
-vc          = 'vendor code'
-api_secret  = 'secret key'
-imei        = 'uniq identifier'
->>>>>>> 54c76307c4d6d433845358058d203d224198cb01
-
-u_app_key='{0}|{1}'.format(user,api_secret)
-
-#Convert to SHA 256 for password and app key
-pwd = hashlib.sha256(u_pwd.encode('utf-8')).hexdigest()
-app_key=hashlib.sha256(u_app_key.encode('utf-8')).hexdigest()
-
-ret = api.login(userid=user, password=pwd, twoFA=factor2, vendor_code=vc, api_secret=app_key, imei=imei)
-print(ret)
+    
