@@ -69,7 +69,8 @@ ret = api.login(userid = cred['user'], password = cred['pwd'], twoFA=cred['facto
 
 if ret != None:   
     while True:
-        print('f => find symbol')        
+        print('f => find symbol')    
+        print('p => contract info n properties')    
         print('v => get 1 min market data')
         print('s => start_websocket')
         print('q => quit')
@@ -96,8 +97,15 @@ if ret != None:
             if ret != None:
                 symbols = ret['values']
                 for symbol in symbols:
-                    print('{0} token is {1}'.format(symbol['tsym'], symbol['token']))            
+                    print('{0} token is {1}'.format(symbol['tsym'], symbol['token']))
 
+        elif prompt1 == 'p':
+            exch  = 'NSE'
+            token = '22'
+            ret = api.get_security_info(exchange=exch, token=token)
+            print(ret)
+
+            
         elif prompt1 == 's':
             if socket_opened == True:
                 print('websocket already opened')
