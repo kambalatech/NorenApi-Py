@@ -34,6 +34,11 @@ Websocket API
 - [subscribe](#md-subscribe)
 - [unsubscribe](#md-unsubscribe)
 
+Example
+- [getting started](#md-example-basic)
+- [getting started](#md-example-basic)
+- [getting started](#md-example-basic)
+
 #### <a name="md-login"></a> login(userid, password, twoFA, vendor_code, api_secret, imei)
 connect to the broker, only once this function has returned successfully can any other operations be performed
 
@@ -206,8 +211,9 @@ send a list of instruments to watch
 send a list of instruments to stop watch
 
 ****
-## Example
-
+## <a name="md-example-basic"></a> Example - Getting Started
+First configure the endpoints in the api_helper constructor. 
+Thereon provide your credentials and login as follows.
 
 ```python
 from NorenRestApiPy.NorenApi import PriceType, BuyorSell, ProductType
@@ -233,7 +239,7 @@ ret = api.login(userid=user, password=pwd, twoFA=factor2, vendor_code=vc, api_se
 print(ret)
 ```
 
-## Example Symbol/Contract  Example_market.py
+## <a name="md-example-market"></a> Example Symbol/Contract : Example_market.py
 This Example shows API usage for finding scrips and its properties
 
 ### Search Scrips
@@ -346,6 +352,11 @@ Subscribe to a single token as follows
 api.subscribe('NSE|13')
 ```
 
+Subscribe to a list of tokens as follows
+```
+api.subscribe(['NSE|22', 'BSE|522032'])
+```
+
 First we need to connect to the WebSocket and then subscribe as follows
 ```
 feed_opened = False
@@ -371,7 +382,7 @@ api.subscribe('NSE|13')
 #subscribe to multiple tokens
 api.subscribe(['NSE|22', 'BSE|522032'])
 ```
-## Example - Orders and Trades
+## <a name="md-example-orders"></a> Example - Orders and Trades : example_orders.py
 ### Place Order
     Place a Limit order as follows
 ```
