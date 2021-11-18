@@ -36,8 +36,8 @@ Websocket API
 
 Example
 - [getting started](#md-example-basic)
-- [getting started](#md-example-basic)
-- [getting started](#md-example-basic)
+- [Market Functions](#md-example-market)
+- [Orders and Trade](#md-example-orders)
 
 #### <a name="md-login"></a> login(userid, password, twoFA, vendor_code, api_secret, imei)
 connect to the broker, only once this function has returned successfully can any other operations be performed
