@@ -90,7 +90,7 @@ if ret != None:
 
         elif prompt1 == 'c':
             orderno=input('Enter orderno:').lower()        
-            ret = api.place_order(orderno=orderno)
+            ret = api.cancel_order(orderno=orderno)
             print(ret)
 
         elif prompt1 == 'o':            

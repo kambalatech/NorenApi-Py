@@ -244,7 +244,13 @@ This Example shows API usage for finding scrips and its properties
 
 ### Search Scrips
 The call can be made to get the exchange provided token for a scrip or alternately can search for a partial string to get a list of matching scrips
-
+Trading Symbol:
+oSymbolName + ExpDate + 'F' for all data having InstrumentName starting with 
+FUT
+oSymbolName + ExpDate + 'P' + StrikePrice for all data 
+having InstrumentName starting with OPT and with OptionType PE
+oSymbolName + ExpDate + 'C' + StrikePrice for all data 
+having InstrumentName starting with OPT and with OptionType C
 ```
 api.searchscrip(exchange='NSE', searchtext='REL')
 ```
