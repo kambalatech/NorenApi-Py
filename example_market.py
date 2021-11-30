@@ -106,7 +106,7 @@ if ret != None:
             ret = api.get_security_info(exchange=exch, token=token)
             print(ret)
 
-         elif prompt1 == 'm':
+        elif prompt1 == 'm':
             exch  = 'NSE'
             token = '22'
             ret = api.get_quotes(exchange=exch, token=token)
