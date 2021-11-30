@@ -104,7 +104,7 @@ retrieves the positions cf and day as a list
 |  No Parameters  |
 
 #### <a name="md-searchscrip"></a> searchscrip(exchange, searchtext):
-search for scrip or contract and its properties 
+search for scrip or contract and its properties  
 
 | Param | Type | Optional |Description |
 | --- | --- | --- | ---|
@@ -245,12 +245,10 @@ This Example shows API usage for finding scrips and its properties
 ### Search Scrips
 The call can be made to get the exchange provided token for a scrip or alternately can search for a partial string to get a list of matching scrips
 Trading Symbol:
-oSymbolName + ExpDate + 'F' for all data having InstrumentName starting with 
-FUT
-oSymbolName + ExpDate + 'P' + StrikePrice for all data 
-having InstrumentName starting with OPT and with OptionType PE
-oSymbolName + ExpDate + 'C' + StrikePrice for all data 
-having InstrumentName starting with OPT and with OptionType C
+oSymbolName + ExpDate + 'F' for all data having InstrumentName starting with FUT
+oSymbolName + ExpDate + 'P' + StrikePrice for all data having InstrumentName starting with OPT and with OptionType PE
+oSymbolName + ExpDate + 'C' + StrikePrice for all data having InstrumentName starting with OPT and with OptionType C
+For MCX, F to be ignored for FUT instruments
 ```
 api.searchscrip(exchange='NSE', searchtext='REL')
 ```
