@@ -17,7 +17,9 @@ def event_handler_order_update(message):
     print("order event: " + str(message))
 
 
+SYMBOLDICT = {}
 def event_handler_quote_update(message):
+    global SYMBOLDICT
     #e   Exchange
     #tk  Token
     #lp  LTP
@@ -31,14 +33,24 @@ def event_handler_quote_update(message):
 
     print("quote event: " + str(message))
     
+    key = message['e'] + '|' + message['tk']
+
+    if key in SYMBOLDICT:
+        symbol_info =  SYMBOLDICT[key]
+        symbol_info.update(message)
+        SYMBOLDICT[key] = symbol_info
+    else:
+        SYMBOLDICT[key] = message
+
+    print(SYMBOLDICT[key])
 
 def open_callback():
     global socket_opened
     socket_opened = True
     print('app is connected')
     
-    api.subscribe('NSE|13')
-    api.subscribe(['NSE|22', 'BSE|522032'])
+    api.subscribe('NSE|11630')
+    #api.subscribe(['NSE|22', 'BSE|522032'])
 
 #end of callbacks
 
@@ -79,15 +91,17 @@ if ret != None:
         prompt1=input('what shall we do? ').lower()                    
         
         if prompt1 == 'v':
-            start_time = "09-07-2021 00:00:00"
+            start_time = "13-07-2021 09:45:00"
             end_time = time.time()
             
             start_secs = get_time(start_time)
+
 
             ret = api.get_time_price_series(exchange='NSE', token='22', starttime=start_secs, endtime=end_time)
             
             df = pd.DataFrame.from_dict(ret)
             print(df)            
+            print(f'{start_secs} to {end_time}')
 
         elif prompt1 == 'f':
             exch  = 'NFO'
