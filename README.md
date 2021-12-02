@@ -20,6 +20,7 @@ Symbols
 - [searchscrip](#md-searchscrip)
 - [get_security_info](#md-get_security_info)
 - [get_quotes](#md-get_quotes)
+- [get_time_price_series](#md-get_time_price_series)
 
 Orders and Trades
 - [place_order](#md-place_order)
@@ -209,8 +210,8 @@ the response is as follows,
 | exch | ```string``` | True | Exchange NSE  / NFO / BSE / CDS |
 | tsym | ```string``` | True | Trading Symbol is the readable Unique id of contract/scrip |
 | cname | ```string``` | True | Company Name |
-symname| ```string``` | True |Symbol Name |
-seg| ```string``` | True |Segment |
+| symname| ```string``` | True |Symbol Name |
+| seg| ```string``` | True |Segment |
 | instname| ```string``` | True |Instrument Name |
 | isin| ```string``` | True |ISIN |
 | pp| ```string``` | True |Price precision |
@@ -258,9 +259,39 @@ seg| ```string``` | True |Segment |
 | so4| ```string``` | True |Best Sell Orders 4 |
 | bo5| ```string``` | True |Best Buy Orders 5 |
 | so5| ```string``` | True |Best Sell Orders 5|
- 
- 
- <a name="md-start_websocket"></a> start_websocket()
+
+#### <a name="md-get_time_price_series"></a> get_time_price_series(exchange, token, starttime, endtime):
+gets the chart date for the symbol
+
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
+| exchange | ```string``` | True | Exchange NSE  / NFO / BSE / CDS |
+| token | ```string``` | True | token number of the contract|
+| starttime | ```string``` | True | Start time (seconds since 1 jan 1970) |
+| endtime | ```string``` | True | End Time (seconds since 1 jan 1970)|
+
+the response is as follows,
+
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
+| stat | ```string``` | True | ok or Not_ok |
+| values | ```string``` | True | properties of the scrip |
+| emsg | ```string``` | False | Error Message |
+
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
+| time | ```string``` | True | DD/MM/CCYY hh:mm:ss |
+| into | ```string``` | True | Interval Open |
+| inth | ```string``` | True | Interval High |
+| intl | ```string``` | True | Interval Low  |
+| intc | ```string``` | True | Interval Close  |
+| intvwap | ```string``` | True | Interval vwap  |
+| intv | ```string``` | True | Interval volume  |
+| v | ```string``` | True | volume  |
+| inoi | ```string``` | True | Interval oi change  |
+| oi | ```string``` | True | oi  |
+
+#### <a name="md-start_websocket"></a> start_websocket()
 starts the websocket
 
 | Param | Type | Optional |Description |
@@ -277,7 +308,10 @@ get order and trade update callbacks
 send a list of instruments to watch
 | Param | Type | Optional |Description |
 | --- | --- | --- | -----|
-| instruments | ```list``` | False | list of instruments [NSE\|22,CDS\|1] || ```string``` | True |#### <a name="md-unsubscribe"></a> unsubscribe()
+| instruments | ```list``` | False | list of instruments [NSE\|22,CDS\|1] |
+
+
+#### <a name="md-unsubscribe"></a> unsubscribe()
 send a list of instruments to stop watch
 
 ****
@@ -286,11 +320,10 @@ First configure the endpoints in the api_helper constructor.
 Thereon provide your credentials and login as follows.
 
 ```python
-from NorenRestApiPy.NorenApi import PriceType, BuyorSell, ProductType
-from api_helper import NorenApiPy, get_time
+from api_helper import NorenApiPy
 import logging
-import hashlib
 
+#enable dbug to see request and responses
 logging.basicConfig(level=logging.DEBUG)
 
 #start of our program
@@ -315,9 +348,10 @@ This Example shows API usage for finding scrips and its properties
 ### Search Scrips
 The call can be made to get the exchange provided token for a scrip or alternately can search for a partial string to get a list of matching scrips
 Trading Symbol:
-oSymbolName + ExpDate + 'F' for all data having InstrumentName starting with FUT
-oSymbolName + ExpDate + 'P' + StrikePrice for all data having InstrumentName starting with OPT and with OptionType PE
-oSymbolName + ExpDate + 'C' + StrikePrice for all data having InstrumentName starting with OPT and with OptionType C
+
+SymbolName + ExpDate + 'F' for all data having InstrumentName starting with FUT
+SymbolName + ExpDate + 'P' + StrikePrice for all data having InstrumentName starting with OPT and with OptionType PE
+SymbolName + ExpDate + 'C' + StrikePrice for all data having InstrumentName starting with OPT and with OptionType C
 For MCX, F to be ignored for FUT instruments
 ```
 api.searchscrip(exchange='NSE', searchtext='REL')
