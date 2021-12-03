@@ -26,10 +26,14 @@ Orders and Trades
 - [place_order](#md-place_order)
 - [modify_order](#md-modify_order)
 - [cancel_order](#md-cancel_order)
+- [exit_order](#md-exit_order)
+- [get_orderbook](#md-get_orderbook)
+- [get_singleorderhistory](#md-get_singleorderhistory)
 
 Holdings and Limits
 - [get_holdings](#md-get_holdings)
 - [get_positions](#md-get_positions)
+- [get_limits](#md-get_limits)
 
 Websocket API
 - [start_websocket](#md-start_websocket)
@@ -58,13 +62,13 @@ place an order to oms
 
 | Param | Type | Optional |Description |
 | --- | --- | --- | ---|
-| buy_or_sell | ```enum``` | False | BuyorSell enum class |
-| product_type | ```enum```| False | ProductType enum class |
+| buy_or_sell | ```string``` | False | B -> BUY, S -> SELL |
+| product_type | ```string```| False | C / M / H Product name (Select from ‘prarr’ Array provided in User Details response, and if same is allowed for selected, exchange. Show product display name, for user to select, and send corresponding prd in API call) |
 | exchange | ```string``` | False | Exchange NSE  / NFO / BSE / CDS |
 | tradingsymbol | ```string``` | False | Unique id of contract on which order to be placed. (use url encoding to avoid special char error for symbols like M&M |
 | quantity | ```integer``` | False | order quantity   |
 | discloseqty | ```integer``` | False | order disc qty |
-| price_type | ```enum```| False | PriceType enum class |
+| price_type | ```string```| False | PriceType enum class |
 | price | ```integer```| False | Price in paise, 100.00 is sent as 10000 |
 | trigger_price | ```integer```| False | Price in paise |
 | retention | ```string```| False | DAY / IOC / EOS |
@@ -80,7 +84,7 @@ modify the quantity pricetype or price of an order
 | exchange | ```string``` | False | Exchange NSE  / NFO / BSE / CDS |
 | tradingsymbol | ```string``` | False | Unique id of contract on which order to be placed. (use url encoding to avoid special char error for symbols like M&M |
 | newquantity | ```integer``` | False | new order quantity   |
-| newprice_type | ```enum```| False | PriceType enum class |
+| newprice_type | ```string```| False | PriceType enum class |
 | newprice | ```integer```| False | Price in paise, 100.00 is sent as 10000 |
 | newtrigger_price | ```integer```| False | Price in paise |
 
@@ -91,12 +95,29 @@ cancel an order
 | --- | --- | --- | ---|
 | orderno | ```string``` | False | orderno with status open |
 
+#### <a name="md-exit_order"></a> exit_order(orderno)
+exits a cover or bracket order
+
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
+| orderno | ```string``` | False | orderno with status open |
+| prd | ```string``` | False | Allowed for only H and B products (Cover order and bracket order)|
+
+
+#### <a name="md-get_singleorderhistory"></a>  single order history(orderno)
+history an order
+
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
+| orderno | ```string``` | False | orderno  |
+
+
 #### <a name="md-get_holdings"></a> get_holdings(product_type)
 retrieves the holdings as a list
 
 | Param | Type | Optional |Description |
 | --- | --- | --- | ---|
-| product_type | ```enum``` | True | retreives the delivery holdings or for a given product  |
+| product_type | ```string``` | True | retreives the delivery holdings or for a given product  |
 
 #### <a name="md-get_positions"></a> get_positions()
 retrieves the positions cf and day as a list
@@ -104,6 +125,15 @@ retrieves the positions cf and day as a list
 | Param | Type | Optional |Description |
 | --- | --- | --- | ---|
 |  No Parameters  |
+
+#### <a name="md-get_limits"></a> get_limits
+retrieves the margin and limits set
+
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
+| product_type | ```string``` | True | retreives the delivery holdings or for a given product  |
+| segment | ```string``` | True | CM / FO / FX  |
+| exchange | ```string``` | True | Exchange NSE/BSE/MCX |
 
 #### <a name="md-searchscrip"></a> searchscrip(exchange, searchtext):
 search for scrip or contract and its properties  
@@ -494,30 +524,44 @@ api.subscribe(['NSE|22', 'BSE|522032'])
 ### Place Order
     Place a Limit order as follows
 ```
-    api.place_order(buy_or_sell=BuyorSell.Buy, product_type=ProductType.Delivery,
+    api.place_order(buy_or_sell='B', product_type='C',
                         exchange='NSE', tradingsymbol='INFY-EQ', 
-                        quantity=1, discloseqty=0,price_type=PriceType.Limit, price=1500, trigger_price=None,
+                        quantity=1, discloseqty=0,price_type='LMT', price=1500, trigger_price=None,
                         retention='DAY', remarks='my_order_001')
 ```
     Place a Market Order as follows
 ```
-    api.place_order(buy_or_sell=BuyorSell.Buy, product_type=ProductType.Delivery,
+    api.place_order(buy_or_sell='B', product_type='C',
                         exchange='NSE', tradingsymbol='INFY-EQ', 
-                        quantity=1, discloseqty=0,price_type=PriceType.Market, price=0, trigger_price=None,
+                        quantity=1, discloseqty=0,price_type='MKT', price=0, trigger_price=None,
                         retention='DAY', remarks='my_order_001')
 ```
     Place a StopLoss Order as follows
 ```
-    api.place_order(buy_or_sell=BuyorSell.Buy, product_type=ProductType.Delivery,
+    api.place_order(buy_or_sell='B', product_type='C',
                         exchange='NSE', tradingsymbol='INFY-EQ', 
-                        quantity=1, discloseqty=0,price_type=PriceType.StopLossLimit, price=1500, trigger_price=1450,
+                        quantity=1, discloseqty=0,price_type='SL-LMT', price=1500, trigger_price=1450,
                         retention='DAY', remarks='my_order_001')
+```
+    Place a Cover Order as follows
+```
+    api.place_order(buy_or_sell='B', product_type='H',
+                        exchange='NSE', tradingsymbol='INFY-EQ', 
+                        quantity=1, discloseqty=0,price_type='LMT', price=1500, trigger_price=None,
+                        retention='DAY', remarks='my_order_001', bookloss_price = 1490)
+```
+    Place a Bracket Order as follows
+```
+    api.place_order(buy_or_sell='B', product_type='H',
+                        exchange='NSE', tradingsymbol='INFY-EQ', 
+                        quantity=1, discloseqty=0,price_type='LMT', price=1500, trigger_price=None,
+                        retention='DAY', remarks='my_order_001', bookloss_price = 1490, bookprofit_price = 1510)
 ```
 ### Modify Order
     Modify a New Order by providing the OrderNumber
 ```
     api.modify_order(exchange='NSE', tradingsymbol='INFY-EQ', orderno=orderno,
-                                   newquantity=2, newprice_type=PriceType.Limit, newprice=1505)
+                                   newquantity=2, newprice_type='LMT', newprice=1505)
 ```
 ### Cancel Order
     Cancel a New Order by providing the Order Number
