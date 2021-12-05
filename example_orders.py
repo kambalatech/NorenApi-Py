@@ -66,7 +66,7 @@ if ret != None:
         print('p => place order')
         print('m => modify order')
         print('c => cancel order')
-        print('h => order history')
+        print('y => order history')
         print('o => get order book')
         print('h => get holdings')
         print('k => get positions')
@@ -93,7 +93,7 @@ if ret != None:
             ret = api.cancel_order(orderno=orderno)
             print(ret)
 
-        elif prompt1 == 'h':
+        elif prompt1 == 'y':
             orderno=input('Enter orderno:').lower()        
             ret = api.single_order_history(orderno=orderno)
             print(ret)
