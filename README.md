@@ -160,9 +160,7 @@ the response is as follows,
 |cfsellamt| ```string``` | False | Carry Forward Sell Amount|
 |lp| ```string``` | False | LTP|
 |rpnl| ```string``` | False | Realized Profit and Loss|
-|urmtom| ```string``` | False | UnRealized Mark To Market (Can be recalculated in LTP update :
- = netqty * (lp from web socket - netavgprc) * prcftr 
-|
+|urmtom| ```string``` | False | UnRealized Mark To Market (Can be recalculated in LTP update : = netqty * (lp from web socket - netavgprc) * prcftr |
 |bep| ```string``` | False | Breakeven Price|
 |openbuyqty| ```string``` | False | Open Buy Order Quantity |
 |opensellqty| ```string``` | False | Open Sell Order Quantity |
