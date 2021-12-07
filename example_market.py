@@ -1,4 +1,3 @@
-from NorenRestApiPy.NorenApi import PriceType, BuyorSell, ProductType
 from api_helper import NorenApiPy, get_time
 import datetime
 import logging
@@ -91,12 +90,12 @@ if ret != None:
         prompt1=input('what shall we do? ').lower()                    
         
         if prompt1 == 'v':
-            start_time = "13-07-2021 09:45:00"
-            end_time = time.time()
+            start_time = "13-07-2021 09:10:00"
+            #end_time = time.time()
             
             start_secs = get_time(start_time)
 
-
+            end_time = get_time("13-07-2021 09:20:00")
             ret = api.get_time_price_series(exchange='NSE', token='22', starttime=start_secs, endtime=end_time)
             
             df = pd.DataFrame.from_dict(ret)
