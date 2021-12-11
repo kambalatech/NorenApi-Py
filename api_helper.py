@@ -18,7 +18,7 @@ def get_time(time_string):
 
 class NorenApiPy(NorenApi):
     def __init__(self):
-        NorenApi.__init__(self, host='http://kurma.kambala.co.in:9959/NorenWClient/', websocket='wss://www.kambala.co.in/NorenWSWeb/', eodhost='http://180.179.158.229/chartApi/getdata/')
+        NorenApi.__init__(self, host='http://kurma.kambala.co.in:9959/NorenWClient/', websocket='wss://www.kambala.co.in/NorenWSWeb/', eodhost='http://kurma.kambala.co.in/chartApi/getdata/')
 
     symboldata = {}
 

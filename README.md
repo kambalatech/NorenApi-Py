@@ -21,7 +21,7 @@ Symbols
 - [get_security_info](#md-get_security_info)
 - [get_quotes](#md-get_quotes)
 - [get_time_price_series](#md-get_time_price_series)
-- [get_option_chain](#md-get_option_chain)
+- [get_option_chain](#md-get_optionchain)
 
 Orders and Trades
 - [place_order](#md-place_order)
@@ -510,14 +510,14 @@ the response is as follows,
 | inoi | ```string``` | True | Interval oi change  |
 | oi | ```string``` | True | oi  |
 
-#### <a name="md-get_optionchain"></a> get_optionchain(exchange, tradingsymbol, strike, count):
+#### <a name="md-get_optionchain"></a> get_option_chain(exchange, tradingsymbol, strikeprice, count):
 gets the chart date for the symbol
 
 | Param | Type | Optional |Description |
 | --- | --- | --- | ---|
 | exchange | ```string``` | False | Exchange (UI need to check if exchange in NFO / CDS / MCX / or any other exchange which has options, if not don't allow)|
 | tradingsymbol | ```string``` | False | Trading symbol of any of the option or future. Option chain for that underlying will be returned. (use url encoding to avoid special char error for symbols like M&M)|
-| strike | ```float``` | False | Mid price for option chain selection|
+| strikeprice | ```float``` | False | Mid price for option chain selection|
 | count | ```int``` | True | Number of strike to return on one side of the mid price for PUT and CALL.  (example cnt is 4, total 16 contracts will be returned, if cnt is is 5 total 20 contract will be returned)|
 
 the response is as follows,
@@ -551,6 +551,45 @@ starts the websocket
 
 #### <a name="md-subscribe_orders"></a> subscribe_orders()
 get order and trade update callbacks
+Subscription Acknowledgement:
+|Json Fields|Possible value|Description|
+|t|ok|‘ok’ represents order update subscription acknowledgement|
+
+Order Update subscription Updates :
+|Json Fields|Possible value| Optional |Description|
+|t|om|‘om’ represents touchline feed|
+|norenordno|||Noren Order Number|
+|uid|||User Id|
+|actid|||Account ID|
+|exch|||Exchange|
+|tsym|||Trading symbol|
+|qty|||Order quantity|
+|prc|||Order Price|
+|prd|||Product|
+|status|||Order status (New, Replaced,  Complete, Rejected etc)|
+|reporttype|||Order event for which this message is sent out. (Fill, Rejected, Canceled)|
+|trantype|||Order transaction type, buy or sell|
+|prctyp|||Order price type (LMT, MKT, SL-LMT, SL-MKT)|
+|ret|||Order retention type (DAY, EOS, IOC,...)|
+|fillshares|||Total Filled shares for this order|
+|avgprc|||Average fill price|
+|fltm|||Fill Time(present only when reporttype is Fill)|
+|flid|||Fill ID (present only when reporttype is Fill)|
+|flqty|||Fill Qty(present only when reporttype is Fill)|
+|flprc|||Fill Price(present only when reporttype is Fill)|
+|rejreason|||Order rejection reason, if rejected|
+|exchordid|||Exchange Order ID|
+|cancelqty|||Canceled quantity, in case of canceled order|
+|remarks|||User added tag, while placing order|
+|dscqty|||Disclosed quantity|
+|trgprc|||Trigger price for SL orders|
+|snonum|||This will be present for child orders in case of cover and bracket orders, if present needs to be sent during exit|
+|snoordt|||This will be present for child orders in case of cover and bracket orders, it will indicate whether the order is profit or stoploss|
+|blprc|||This will be present for cover and bracket parent order. This is the differential stop loss trigger price to be entered. |
+|bpprc|||This will be present for bracket parent order. This is the differential profit price to be entered. |
+|trailprc|||This will be present for cover and bracket parent order. This is required if trailing ticks is to be enabled.|
+|exch_tm|||This will have the exchange update time|
+
 
 #### <a name="md-subscribe"></a> subscribe([instruments])
 send a list of instruments to watch
@@ -781,7 +820,7 @@ api.subscribe(['NSE|22', 'BSE|522032'])
 ```
     Place a Bracket Order as follows
 ```
-    api.place_order(buy_or_sell='B', product_type='H',
+    api.place_order(buy_or_sell='B', product_type='B',
                         exchange='NSE', tradingsymbol='INFY-EQ', 
                         quantity=1, discloseqty=0,price_type='LMT', price=1500, trigger_price=None,
                         retention='DAY', remarks='my_order_001', bookloss_price = 1490, bookprofit_price = 1510)
