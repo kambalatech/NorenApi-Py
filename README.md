@@ -559,13 +559,17 @@ starts the websocket
 
 #### <a name="md-subscribe_orders"></a> subscribe_orders()
 get order and trade update callbacks
+
 Subscription Acknowledgement:
+
 | Json Fields| Possible value| Description| 
+| --- | --- | --- |
 | t  |  ok |  ‘ok’ represents order update subscription acknowledgement | 
 
 Order Update subscription Updates :
 
  | Json Fields | Possible value |  Description | 
+ | --- | --- | --- |
  | t | om | ‘om’ represents touchline feed | 
  | norenordno |   | Noren Order Number | 
  | uid |   | User Id | 
