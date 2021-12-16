@@ -12,7 +12,7 @@ logging.basicConfig(level=logging.INFO)
 
 
 #start of our program
-api = ShoonyaApiPy()
+api = NorenApiPy()
 
 #use following if yaml isnt used
 #user    = <uid>

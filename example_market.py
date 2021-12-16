@@ -16,9 +16,7 @@ def event_handler_order_update(message):
     print("order event: " + str(message))
 
 
-SYMBOLDICT = {}
 def event_handler_quote_update(message):
-    global SYMBOLDICT
     #e   Exchange
     #tk  Token
     #lp  LTP
@@ -29,20 +27,8 @@ def event_handler_quote_update(message):
     #l   Low price
     #c   Close price
     #ap  Average trade price
-
     print("quote event: {0}".format(time.strftime('%d-%m-%Y %H:%M:%S')) + str(message))
     
-    key = message['e'] + '|' + message['tk']
-
-    if key in SYMBOLDICT:
-        symbol_info =  SYMBOLDICT[key]
-        symbol_info.update(message)
-        SYMBOLDICT[key] = symbol_info
-    else:
-        SYMBOLDICT[key] = message
-
-    print(SYMBOLDICT[key])
-
 def open_callback():
     global socket_opened
     socket_opened = True
