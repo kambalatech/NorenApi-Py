@@ -129,8 +129,15 @@ if ret != None:
         elif prompt1 == 'o':
             exch  = 'NFO'
             tsym = 'COFORGE30DEC21F'
-            ret = api.get_option_chain(exchange=exch, tradingsymbol=tsym, strikeprice=3500, count=2)
-            print(ret)
+            chain = api.get_option_chain(exchange=exch, tradingsymbol=tsym, strikeprice=3500, count=2)
+
+            chainscrips = []
+            for scrip in chain['values']:
+                scripdata = api.get_quotes(exchange=scrip['exch'], token=scrip['token'])
+                chainscrips.append(scripdata)
+
+            print(chainscrips)
+
         elif prompt1 == 's':
             if socket_opened == True:
                 print('websocket already opened')
