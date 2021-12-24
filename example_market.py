@@ -27,8 +27,10 @@ def event_handler_quote_update(message):
     #l   Low price
     #c   Close price
     #ap  Average trade price
+
     print("quote event: {0}".format(time.strftime('%d-%m-%Y %H:%M:%S')) + str(message))
     
+
 def open_callback():
     global socket_opened
     socket_opened = True
@@ -100,7 +102,7 @@ if ret != None:
 
         elif prompt1 == 'f':
             exch  = 'NFO'
-            query = 'COFORGE'
+            query = 'BANKNIFTY 30DEC CE'
             ret = api.searchscrip(exchange=exch, searchtext=query)
             print(ret)
 

@@ -1,6 +1,6 @@
 import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from api_helper import NorenApiPy, get_time
+from api_helper import NorenApiPy
 import logging
 import yaml
 import datetime
@@ -38,15 +38,16 @@ if ret != None:
         print(scrips)
         print(80*'=')        
 
-    ret = api.add_watch_list_scrip(wlname=wlnames['values'][0], instrument='NSE|22')
-    wlscrips = api.get_watch_list(wlname=wl)
+    wltest = wlnames['values'][0]
+    ret = api.add_watch_list_scrip(wlname=wltest, instrument='NSE|22')
+    wlscrips = api.get_watch_list(wlname=wltest)
 
     for scrip in wlscrips['values']:
         print(f"{scrip['exch']} - {scrip['token']} {scrip['tsym']}")
     
     print(80*'=')
-    ret = api.delete_watch_list_scrip(wlname=wlnames['values'][0], instrument='NSE|22')
-    wlscrips = api.get_watch_list(wlname=wl)
+    ret = api.delete_watch_list_scrip(wlname=wltest, instrument='NSE|22')
+    wlscrips = api.get_watch_list(wlname=wltest)
 
     for scrip in wlscrips['values']:
         print(f"{scrip['exch']} - {scrip['token']} {scrip['tsym']}")
