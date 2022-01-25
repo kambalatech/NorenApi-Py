@@ -52,39 +52,156 @@ Example
 #### <a name="md-login"></a> login(userid, password, twoFA, vendor_code, api_secret, imei)
 connect to the broker, only once this function has returned successfully can any other operations be performed
 
-| Param | Type | Optional |Description |
+Request Details :
+
+|Json Fields|Possible value|Description|
 | --- | --- | --- | ---|
-| userid | ```string``` | False | user credentials |
-| password | ```string```| False | password encrypted |
-| twoFA | ```string``` | False | dob/pan |
-| vendor_code | ```string``` | False | vendor code shared  |
-| api_secret | ```string``` | False | your secret   |
-| imei | ```string``` | False | imei identification |
+|apkversion*||Application version.|
+|uid*||User Id of the login user|
+|pwd*||Sha256 of the user entered password.|
+|factor2*||DOB or PAN as entered by the user. (DOB should be in DD-MM-YYYY)|
+|vc*||Vendor code provided by noren team, along with connection URLs|
+|appkey*||Sha256 of  uid|vendor_key|
+|imei*||Send mac if users logs in for desktop, imei is from mobile|
+|addldivinf||Optional field, Value must be in below format:|iOS - iosInfo.utsname.machine - iosInfo.systemVersion|Android - androidInfo.model - androidInfo.version|examples:|iOS - iPhone 8.0 - 9.0|Android - Moto G - 9 PKQ1.181203.01|
+|ipaddr||Optional field|
+|source|API||
+
+
+Example: 
+curl https://apitest.kambala.co.in/NorenWClientTP/QuickAuth \
+    -d "jData={ \"apkversion\": \"1.0.0\",  \"uid\": \"VIDYA\", \"pwd\": \"s3cur3Id\", \"factor2\": \"31-08-2017\",  \"imei\": \"134243434\", \"source\": \"API\"}“
+
+Response Details :
+Response data will be in json format with below fields.
+|Json Fields|Possible value|Description|
+| --- | --- | --- | ---|
+|stat|Ok or Not_Ok|Login Success Or failure status|
+|susertoken||It will be present only on login success. This data to be sent in subsequent requests in jKey field and web socket connection while connecting. |
+|lastaccesstime||It will be present only on login success.|
+|spasswordreset|Y |If Y Mandatory password reset to be enforced. Otherwise the field will be absent.|
+|exarr||Json array of strings with enabled exchange names|
+|uname||User name|
+|prarr||Json array of Product Obj with enabled products, as defined below.|
+|actid||Account id|
+|email||Email Id|
+|brkname||Broker id|
+|emsg||This will be present only if Login fails.|(Redirect to force change password if message is “Invalid Input : Password Expired” or “Invalid Input : Change Password”)|
+
+
+Sample Success Response :
+{
+    "request_time": "20:18:47 19-05-2020",
+    "stat": "Ok",
+    "susertoken": "3b97f4c67762259a9ded6dbd7bfafe2787e662b3870422ddd343a59895f423a0",
+    "lastaccesstime": "1589899727"
+}
+
+Sample Failure Response :
+{
+    "request_time": "20:32:14 19-05-2020",
+    "stat": "Not_Ok",
+    "emsg": "Invalid Input : Wrong Password"
+}
+
 
 #### <a name="md-logout"></a> logout()
 Terminate the session
 
-| Param | Type | Optional |Description |
+Request Details :
+
+|Json Fields|Possible value|Description|
 | --- | --- | --- | ---|
-|  No Parameters  |
+|uid*||User Id of the login user|
+
+
+Response Details :
+Response data will be in json format with below fields.
+|Json Fields|Possible value|Description|
+| --- | --- | --- | ---|
+|stat|Ok or Not_Ok|Logout Success Or failure status|
+|request_time||It will be present only on successful logout.|
+|emsg||This will be present only if Logout fails.|
+
+Sample Success Response :
+{
+   "stat":"Ok",
+   "request_time":"10:43:41 28-05-2020"
+}
+
+Sample Failure Response :
+{
+   "stat":"Not_Ok",
+   "emsg":"Server Timeout :  "
+}
+
 
 #### <a name="md-place_order"></a> place_order(buy_or_sell, product_type,exchange, tradingsymbol, quantity, discloseqty, price_type, price=0.0, trigger_price=None, retention='DAY', amo='NO', remarks=None)
 place an order to oms
 
-| Param | Type | Optional |Description |
+Request Details :
+
+|Json Fields|Possible value|Description|
 | --- | --- | --- | ---|
-| buy_or_sell | ```string``` | False | B -> BUY, S -> SELL |
-| product_type | ```string```| False | C / M / H Product name (Select from ‘prarr’ Array provided in User Details response, and if same is allowed for selected, exchange. Show product display name, for user to select, and send corresponding prd in API call) |
-| exchange | ```string``` | False | Exchange NSE  / NFO / BSE / CDS |
-| tradingsymbol | ```string``` | False | Unique id of contract on which order to be placed. (use url encoding to avoid special char error for symbols like M&M |
-| quantity | ```integer``` | False | order quantity   |
-| discloseqty | ```integer``` | False | order disc qty |
-| price_type | ```string```| False | PriceType enum class |
-| price | ```double```| False | Price |
-| trigger_price | ```double```| False | Trigger Price |
-| retention | ```string```| False | DAY / IOC / EOS |
-| amo | ```string```| True | Flag for After Market Order, YES/NO  |
-| remarks | ```string```| True | client order id or free text   |
+|uid*||Logged in User Id|
+|actid*||Login users account ID|
+|exch*|NSE  / NFO / BSE / MCX|Exchange (Select from ‘exarr’ Array provided in User Details response)|
+|tsym*||Unique id of contract on which order to be placed. (use url encoding to avoid special char error for symbols like M&M)|
+|qty*||Order Quantity |
+|prc*||Order Price|
+|trgprc||Only to be sent in case of SL / SL-M order.|
+|dscqty||Disclosed quantity (Max 10% for NSE, and 50% for MCX)|
+|prd*|C / M / H|Product name (Select from ‘prarr’ Array provided in User Details response, and if same is allowed for selected, exchange. Show product display name, for user to select, and send corresponding prd in API call)|
+|trantype*|B / S|B -> BUY, S -> SELL|
+|prctyp*|LMT / MKT  / SL-LMT / SL-MKT / DS / 2L / 3L||||
+|ret*|DAY / EOS / IOC |Retention type (Show options as per allowed exchanges) |
+|remarks||Any tag by user to mark order.|
+|ordersource|MOB / WEB / TT |Used to generate exchange info fields.|
+|bpprc||Book Profit Price applicable only if product is selected as B (Bracket order ) |
+|blprc||Book loss Price applicable only if product is selected as H and B (High Leverage and Bracket order ) |
+|trailprc||Trailing Price applicable only if product is selected as H and B (High Leverage and Bracket order ) |
+|amo||Yes , If not sent, of Not “Yes”, will be treated as Regular order. |
+|tsym2||Trading symbol of second leg, mandatory for price type 2L and 3L (use url encoding to avoid special char error for symbols like M&M)|
+|trantype2||Transaction type of second leg, mandatory for price type 2L and 3L|
+|qty2||Quantity for second leg, mandatory for price type 2L and 3L|
+|prc2||Price for second leg, mandatory for price type 2L and 3L|
+|tsym3||Trading symbol of third leg, mandatory for price type 3L (use url encoding to avoid special char error for symbols like M&M)|
+|trantype3||Transaction type of third leg, mandatory for price type 3L|
+|qty3||Quantity for third leg, mandatory for price type 3L|
+|prc3||Price for third leg, mandatory for price type 3L|
+
+
+Example: 
+curl https://apitest.kambala.co.in/NorenWClientTP/PlaceOrder \
+    -d "jData={\"uid\":\"VIDYA\", \"actid\":\"CLIENT1\", \"exch\":\"NSE\", \"tsym\":\"ACC-EQ\", \"qty\":\"50\", \"price\":\"1400\", \"prd\":\"H\", \"trantype\":\"B\", \"prctyp\":\"LMT\", \"ret\":\"DAY\"}“ \
+    -d “jKey=GHUDWU53H32MTHPA536Q32WR”
+
+Response Details :
+
+Response data will be in json format with below fields.
+
+|Json Fields|Possible value|Description|
+| --- | --- | --- | ---|
+|stat|Ok or Not_Ok|Place order success or failure indication.|
+|request_time||Response received time.|
+|norenordno||It will be present only on successful Order placement to OMS.|
+|emsg||This will be present only if Order placement fails|
+
+Sample Success Response:
+{
+    "request_time": "10:48:03 20-05-2020",
+    "stat": "Ok",
+    "norenordno": "20052000000017"
+}
+
+Sample Error Response :
+{
+    "stat": "Not_Ok",
+    "request_time": "20:40:01 19-05-2020",
+    "emsg": "Error Occurred : 2 \"invalid input\""
+}
+
+
 
 #### <a name="md-modify_order"></a> modify_order(orderno, exchange, tradingsymbol, newquantity,newprice_type, newprice, newtrigger_price, amo):
 modify the quantity pricetype or price of an order
