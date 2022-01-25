@@ -55,7 +55,7 @@ connect to the broker, only once this function has returned successfully can any
 Request Details :
 
 |Json Fields|Possible value|Description|
-| --- | --- | --- | ---|
+| --- | --- | ---|
 |apkversion*||Application version.|
 |uid*||User Id of the login user|
 |pwd*||Sha256 of the user entered password.|
@@ -75,7 +75,7 @@ curl https://apitest.kambala.co.in/NorenWClientTP/QuickAuth \
 Response Details :
 Response data will be in json format with below fields.
 |Json Fields|Possible value|Description|
-| --- | --- | --- | ---|
+| --- | --- | ---|
 |stat|Ok or Not_Ok|Login Success Or failure status|
 |susertoken||It will be present only on login success. This data to be sent in subsequent requests in jKey field and web socket connection while connecting. |
 |lastaccesstime||It will be present only on login success.|
@@ -104,21 +104,20 @@ Sample Failure Response :
     "emsg": "Invalid Input : Wrong Password"
 }
 
-
 #### <a name="md-logout"></a> logout()
 Terminate the session
 
 Request Details :
 
 |Json Fields|Possible value|Description|
-| --- | --- | --- | ---|
+| --- | --- | ---|
 |uid*||User Id of the login user|
 
 
 Response Details :
 Response data will be in json format with below fields.
 |Json Fields|Possible value|Description|
-| --- | --- | --- | ---|
+| --- | --- | ---|
 |stat|Ok or Not_Ok|Logout Success Or failure status|
 |request_time||It will be present only on successful logout.|
 |emsg||This will be present only if Logout fails.|
