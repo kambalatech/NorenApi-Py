@@ -895,10 +895,6 @@ print(f'{day_m2m} is your Daily MTM')
 ```
 
 Request Details :
-|Parameter Name|Possible value|Description|
-| --- | --- | ---|
-|jData*||Should send json object with fields in below list|
-|jKey*||Key Obtained on login success.|
 
 |Json Fields|Possible value|Description|
 | --- | --- | ---|
@@ -1386,9 +1382,6 @@ Request Details :
 |uid*||Logged in User Id|
 |exch||Exchange |
 |token||Contract Token|
-
-Example: 
-jData={"uid":"{{USER_ID}}", "exch":"NSE", "token":"22"}&jKey=c180c60ec8f7870490ec27f4accdba179a149a5e5b1d503a0682d8b72acb24b3
 
 Response Details :
 
