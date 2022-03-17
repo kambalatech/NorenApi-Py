@@ -6,32 +6,30 @@ import concurrent.futures
 
 api = None
 class Order:
-    def __init__(self):
-        self.buy_or_sell=''
-        self.product_type='C'
-        self.exchange=''
-        self.tradingsymbol='', 
-        self.quantity=0
-        self.discloseqty=0
-        self.price_type='LMT'
-        self.price=0.00
-        self.trigger_price=None
-        self.retention='DAY'
-        self.remarks=''
-        self.amo='NO'
-        self.bookloss_price = 0.0
-        self.bookprofit_price = 0.0
-        self.trail_price = 0.0
+     def __init__(self, buy_or_sell:str = None, product_type:str = None,
+                 exchange: str = None, tradingsymbol:str =None, 
+                 price_type: str = None, quantity: int = None, 
+                 price: float = None,trigger_price:float = None, discloseqty: int = 0,
+                 retention:str = 'DAY', remarks: str = "tag",
+                 order_id:str = None):
+        self.buy_or_sell=buy_or_sell
+        self.product_type=product_type
+        self.exchange=exchange
+        self.tradingsymbol=tradingsymbol
+        self.quantity=quantity
+        self.discloseqty=discloseqty
+        self.price_type=price_type
+        self.price=price
+        self.trigger_price=trigger_price
+        self.retention=retention
+        self.remarks=remarks
+        self.order_id=None
 
-def place_order(order):
-    ret = api.place_order(buy_or_sell=order.buy_or_sell, product_type=order.product_type,
-                        exchange=order.exchange, tradingsymbol=order.tradingsymbol, 
-                        quantity=order.quantity, discloseqty=order.discloseqty, price_type=order.price_type, 
-                        price=order.price, trigger_price=order.trigger_price,
-                        retention=order.retention, remarks=order.remarks)
+
     #print(ret)
 
-    return ret
+    
+
 
 def get_time(time_string):
     data = time.strptime(time_string,'%d-%m-%Y %H:%M:%S')
@@ -41,8 +39,8 @@ def get_time(time_string):
 
 class NorenApiPy(NorenApi):
     def __init__(self):
-        #NorenApi.__init__(self, host='http://rama.kambala.co.in/NorenWClient/', websocket='ws://rama.kambala.co.in:5551/NorenWS/', eodhost='http://kurma.kambala.co.in/chartApi/getdata/')
-        NorenApi.__init__(self, host='http://kurma.kambala.co.in:9959/NorenWClient/', websocket='wss://www.kambala.co.in/NorenWSWeb/', eodhost='http://kurma.kambala.co.in/chartApi/getdata/')
+        NorenApi.__init__(self, host='http://rama.kambala.co.in/NorenWClient/', websocket='ws://rama.kambala.co.in:5551/NorenWS/', eodhost='http://kurma.kambala.co.in/chartApi/getdata/')
+        #NorenApi.__init__(self, host='http://matsya.kambala.co.in:9959/NorenWClient/', websocket='wss://www.kambala.co.in/NorenWSWeb/', eodhost='http://kurma.kambala.co.in/chartApi/getdata/')
         global api
         api = self
 
@@ -53,7 +51,7 @@ class NorenApiPy(NorenApi):
         result   = []
         with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
 
-            future_to_url = {executor.submit(place_order, order): order for order in  orders}
+            future_to_url = {executor.submit(self.place_order, order): order for order in  orders}
             for future in concurrent.futures.as_completed(future_to_url):
                 url = future_to_url[future]
             try:
@@ -66,4 +64,12 @@ class NorenApiPy(NorenApi):
 
         return result
                 
-            
+    def place_order(self,order: Order):
+        ret = NorenApi.place_order(self, buy_or_sell=order.buy_or_sell, product_type=order.product_type,
+                            exchange=order.exchange, tradingsymbol=order.tradingsymbol, 
+                            quantity=order.quantity, discloseqty=order.discloseqty, price_type=order.price_type, 
+                            price=order.price, trigger_price=order.trigger_price,
+                            retention=order.retention, remarks=order.remarks)
+        #print(ret)
+
+        return ret
