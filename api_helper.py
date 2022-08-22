@@ -39,11 +39,10 @@ def get_time(time_string):
 
 class NorenApiPy(NorenApi):
     def __init__(self):
-        NorenApi.__init__(self, host='http://rama.kambala.co.in/NorenWClient/', websocket='ws://rama.kambala.co.in:5551/NorenWS/', eodhost='http://kurma.kambala.co.in/chartApi/getdata/')
-        #NorenApi.__init__(self, host='http://matsya.kambala.co.in:9959/NorenWClient/', websocket='wss://www.kambala.co.in/NorenWSWeb/', eodhost='http://kurma.kambala.co.in/chartApi/getdata/')
+        #NorenApi.__init__(self, host='http://rama.kambala.co.in/NorenWClient/', websocket='ws://rama.kambala.co.in:5551/NorenWS/', eodhost='http://kurma.kambala.co.in/chartApi/getdata/')
+        NorenApi.__init__(self, host='https://www.kambala.co.in//NorenWClientTP/', websocket='ws://matsya.kambala.co.in:9657/NorenWS/', eodhost='http://kurma.kambala.co.in/chartApi/getdata/')
         global api
         api = self
-
     def place_basket(self, orders):
 
         resp_err = 0
@@ -64,7 +63,7 @@ class NorenApiPy(NorenApi):
 
         return result
                 
-    def place_order(self,order: Order):
+    def placeOrder(self,order: Order):
         ret = NorenApi.place_order(self, buy_or_sell=order.buy_or_sell, product_type=order.product_type,
                             exchange=order.exchange, tradingsymbol=order.tradingsymbol, 
                             quantity=order.quantity, discloseqty=order.discloseqty, price_type=order.price_type, 
