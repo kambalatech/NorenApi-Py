@@ -1231,7 +1231,7 @@ Options greeeks computed the delta, thetha, vega , rho values.
 Example: 
 
 ```
-ret = api.option_greek(expiredate ='24-NOV-2022',StrikePrice='150',SpotPrice  = '200',InitRate  = '100',Volatility = '10',OptionType='5')
+ret = api.option_greek(expiredate ='24-NOV-2022',StrikePrice='150',SpotPrice  = '200',InitRate  = '100',Volatility = '10',OptionType='CE')
 ```
 Request Details :
 
@@ -1242,7 +1242,7 @@ Request Details :
 |sptprc*||Spot Price|
 |int_rate*||Init Rate|
 |volatility*||Volatility|
-|optt||Option Type|
+|optt|CE or PE|Option Type|
 
 Response Details :
 
