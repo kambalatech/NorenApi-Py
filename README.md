@@ -7,7 +7,7 @@ Api used to connect to NorenOMS
 
 to build this package and install it on your server please use 
 
-``` pip install -r requirements.txt ```
+``` pip install NorenRestApi ```
 
 
 ****
