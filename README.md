@@ -49,6 +49,12 @@ Websocket API
 - [subscribe](#md-subscribe)
 - [unsubscribe](#md-unsubscribe)
 
+Annexure
+- [Alert Type](#md-alert_type)
+- [Report Type](#md-report_type)
+- [Status Type](#md-status_type)
+- [Internal Status Type](#md-internal_status_type)
+
 Example
 - [getting started](#md-example-basic)
 - [Market Functions](#md-example-market)
@@ -2068,6 +2074,79 @@ Accept for t, e, and tk other fields may / may not be present.
 
 #### <a name="md-unsubscribe"></a> unsubscribe()
 send a list of instruments to stop watch
+
+#### <a name="md-alert_type"></a>Alert Type:
+
+| Alert Criteria |  Condition| Alert type|Transformation and data validations|
+| --- | --- | --- | ---|
+| LTP | > |LTP_A| depending on scrip 'pp' from search results allow 2/4 precision|
+| LTP  |<|LTP_B | depending on scrip 'pp' from search results allow 2/4 precision|
+| Change %  |> |CH_PER_A | Upto 2 decimals allowed|
+| Change %  |< |CH_PER_B| Upto 2 decimals allowed|
+| Average Trade price of day  |>|ATP_A |depending on scrip 'pp' from search results allow 2/4 precision|
+| Average Trade price of day  |<|ATP_B | depending on scrip 'pp' from search results allow 2/4 precision|
+| LTP vs 52week high  |>|LTP_A_52HIGH | No input data|
+| LTP vs 52week high  |<|LTP_B_52LOW  | No input data|
+| Volume  |>|VOLUME_A | Non decimal number|
+| Open Interest  |>|OI_A | Non decimal number, allow only for derivative contracts|
+| Open Interest  |<|OI_B | Non decimal number, allow only for derivative contracts|
+| Total Open Interest  |>|TOI_A | Non decimal number, this will work only for NSE symbols which are FO listed.|
+| Total Open Interest  |<|TOI_B | Non decimal number, this will work only for NSE symbols which are FO listed.|
+| LTP  |Both > and < |LMT_BOS_O | depending on scrip 'pp' from search results allow 2/4 precision|
+
+Note: All alert types with _O appended will work for GTT order types. Example: to set GTT order when LTP goes above 1,000, set alert type as LTP_A_O
+
+
+#### <a name="md-report_type"></a>Report Type:
+
+| Possible Values | 
+| --- | 
+|NewAck| 
+|ModAck| 
+|CanAck| 
+|PendingNew| 
+|PendingReplace| 
+|PendingCancel|     
+|New| 
+|Replaced| 
+|Canceled| 
+|Fill| 
+|Rejected| 
+|ReplaceRejected| 
+|CancelRejected| 
+|INVALID_REPORT_TYPE| 
+
+#### <a name="md-status_type"></a>Status Type:
+
+| Possible Values | 
+| --- | 
+|PENDING| 
+|CANCELED| 
+|OPEN| 
+|REJECTED| 
+|COMPLETE| 
+|TRIGGER_PENDING| 
+|INVALID_STATUS_TYPE| 
+
+#### <a name="md-internal_status_type"></a>Internal Status Type:
+
+| Possible Values | 
+| --- | 
+|COMPLETE| 
+|PARTIAL FILL| 
+|REJECTED| 
+|CANCELED| 
+|MODIFY PENDING| 
+|CANCEL PENDING| 
+|ORDER PENDING| 
+|OPEN| 
+|ORDER ACK| 
+|MODIFY ACK| 
+|CANCEL ACK| 
+|TRIGGER_PENDING| 
+|AMO OPEN| 
+|AMO MODIFIED| 
+|AMO CANCELED| 
 
 ****
 ## <a name="md-example-basic"></a> Example - Getting Started
