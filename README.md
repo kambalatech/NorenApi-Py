@@ -2164,7 +2164,7 @@ Note: All alert types with _O appended will work for GTT order types. Example: t
 | Possible Values | Description|
 | --- | ---|
 |C|CNC / Delivery|
-|M|NRML / Margin |
+|M|CF/ Carry Forward |
 |I|	IntraDay / MIS|
 |H|	CO / Cover Order|
 |B|	BO / Bracket Order|
