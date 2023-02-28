@@ -54,7 +54,8 @@ Annexure
 - [Report Type](#md-report_type)
 - [Status Type](#md-status_type)
 - [Internal Status Type](#md-internal_status_type)
-- [Order Type or Product type](#md-order_type)
+- [Order Type](#md-order_type)
+- [Product Type](#md-product_type)
 
 Example
 - [getting started](#md-example-basic)
@@ -2149,7 +2150,7 @@ Note: All alert types with _O appended will work for GTT order types. Example: t
 |AMO MODIFIED| 
 |AMO CANCELED| 
 
-#### <a name="md-order_type"></a>Order Type or Product type:
+#### <a name="md-order_type"></a>Order Type:
 
 | Possible Values | Description|
 | --- | ---|
@@ -2157,6 +2158,11 @@ Note: All alert types with _O appended will work for GTT order types. Example: t
 |MKT| Market order|
 |SL-LMT| Stop-Limit Order|
 |SL-MKT| Stop-Limit  Market order|
+
+#### <a name="md-product_type"></a>Product Type:
+
+| Possible Values | Description|
+| --- | ---|
 |C|CNC / Delivery|
 |M|NRML / Margin |
 |I|	IntraDay / MIS|
