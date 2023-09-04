@@ -83,7 +83,7 @@ Request Details :
 |apkversion*||Application version.|
 |uid*||User Id of the login user|
 |pwd*||Sha256 of the user entered password.|
-|factor2*||DOB or PAN as entered by the user. (DOB should be in DD-MM-YYYY)|
+|factor2*||OTP or TOTP|
 |vc*||Vendor code provided by noren team, along with connection URLs|
 |appkey*||Sha256 of  uid|vendor_key|
 |imei*||Send mac if users logs in for desktop, imei is from mobile|
