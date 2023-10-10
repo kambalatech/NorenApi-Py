@@ -16,6 +16,7 @@ to build this package and install it on your server please use
 ```NorenApi```
 - [login](#md-login)
 - [logout](#md-logout)
+- [Forgot_Password_OTP](#md-forgotpasswordOTP)
 
 Symbols
 - [searchscrip](#md-searchscrip)
@@ -158,6 +159,38 @@ Sample Failure Response :
    "stat":"Not_Ok",
    "emsg":"Server Timeout :  "
 }
+
+#### <a name="md-forgotpasswordOTP"></a> forgot_passwordOTP(userid,pan)
+
+Request Details :
+
+|Json Fields|Possible value|Description|
+| --- | --- | ---|
+|uid*||User Id|
+|pan*||Pan of the user Or Sha256 3 times of password|
+
+Response Details :
+|Json Fields|Possible value|Description|
+| --- | --- | ---|
+|uid||User Id|
+|ReqStatus||Request status, present only when success. Value will be “OTP generation success”|
+|emsg||Error message :“Error Occurred : Wrong user id or user details”|
+
+Sample Success Response :
+```
+{
+   "uid":"user1",
+   "ReqStatus":"OTP generation success"
+}
+```
+
+Sample Failure Response :
+```
+{
+"stat":"Not_Ok",
+"emsg":"Server Timeout :   "
+}
+```
 
 
 #### <a name="md-place_order"></a> place_order(buy_or_sell, product_type,exchange, tradingsymbol, quantity, discloseqty, price_type, price=0.0, trigger_price=None, retention='DAY', amo='NO', remarks=None)
