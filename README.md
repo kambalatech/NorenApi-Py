@@ -165,7 +165,6 @@ Request Details :
 | --- | --- | --- | ---|
 |Handled in Python wrapper|uid*||User Id|
 |pan|pan*||Pan of the user Or Sha256 3 times of password|
-|dob|dob||Date of birth|
 
 Response Details :
 |Json Fields|Possible value|Description|
