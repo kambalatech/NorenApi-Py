@@ -2154,7 +2154,6 @@ Note: All alert types with _O appended will work for GTT order types. Example: t
 | Possible Values | 
 | --- | 
 |COMPLETE| 
-|PARTIAL FILL| 
 |REJECTED| 
 |CANCELED| 
 |MODIFY PENDING| 
