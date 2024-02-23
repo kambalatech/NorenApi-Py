@@ -1764,7 +1764,7 @@ ret = api.get_time_price_series(exchange='NSE', token='22', starttime=lastBusDay
 ```
 Request Details :
 
-|Python Parameters|Json Fields|Possible value|Description|
+|Json Fields|Possible value|Description|
 | --- | --- | ---|
 |uid*||Logged in User Id|
 |exch*||Exchange|
