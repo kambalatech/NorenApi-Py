@@ -2189,6 +2189,32 @@ Note: All alert types with _O appended will work for GTT order types. Example: t
 
 ****
 ## <a name="md-example-basic"></a> Example - Getting Started
+## Login Instructions
+
+### Login via TOTP (Time-based One-Time Password)
+
+1. **User Login**
+   - Navigate to the website and log in with your credentials.
+
+2. **Access API Key**
+   - Click on the **API Button** located in the top right corner.
+   - Select **API Key**, then click on **Generate**.
+
+3. **Generate TOTP**
+   - Copy the **Secret Key** provided.
+   - Use this key to generate a TOTP using either:
+     - **Google/Microsoft Authenticator app**.
+     - **Python script**:
+       - Refer to [pyotp GitHub Repository](https://github.com/pyauth/pyotp) for generating TOTP in Python.
+
+### Login via OTP (One-Time Password)
+
+1. **Generate OTP**
+   - Follow the instructions in the [Generate OTP script](https://github.com/kambalatech/NorenApi-Py/blob/main/tests/test_forgotpassword_OTP.py).
+
+2. **Use OTP for Login**
+   - Use the generated OTP as `factor2` in the login process.
+   - Refer to the [Login script](https://github.com/kambalatech/NorenApi-Py/blob/main/test_api.py) for implementation details.
 First configure the endpoints in the api_helper constructor. 
 Thereon provide your credentials and login as follows.
 
