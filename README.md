@@ -2215,7 +2215,53 @@ Note: All alert types with _O appended will work for GTT order types. Example: t
 2. **Use OTP for Login**
    - Use the generated OTP as `factor2` in the login process.
    - Refer to the [Login script](https://github.com/kambalatech/NorenApi-Py/blob/main/test_api.py) for implementation details.
-First configure the endpoints in the api_helper constructor. 
+
+## Switching Between UAT and Live Servers
+
+This package supports both **UAT** and **Live** environments. By default, the configuration is set to connect to the UAT server. You can switch between UAT and the live production environment by modifying the `api_helper.py` file.
+
+### UAT Environment (Default Configuration)
+
+The default configuration connects to the **UAT** server for testing:
+
+```python
+class NorenApiPy(NorenApi):
+    def __init__(self, *args, **kwargs):
+        super(StarApiPy, self).__init__(
+            host='https://UAT_server.com/NorenWClientTP', 
+            websocket='wss://UAT_server.com/NorenWS/'
+        )
+        global api
+        api = self
+```
+###  Switching to the Live Server
+To connect to the live production environment, you need to change the URLs to the live server's endpoints.
+
+Live Server Configuration
+```python
+class NorenApiPy(NorenApi):
+    def __init__(self, *args, **kwargs):
+        super(StarApiPy, self).__init__(
+            host='https://Live_server.com/NorenWClientTP', 
+            websocket='wss://Live_server.com/NorenWS/'
+        )
+        global api
+        api = self      
+```          
+## Steps to Modify the Configuration
+
+1. **Open the `api_helper.py` file**: Navigate to the `api_helper.py` file in your project directory.
+
+2. **Modify the `host` and `websocket` URLs**: 
+   - Update the `host` and `websocket` URLs to reflect the desired environment.
+   - To use the **UAT** environment, ensure the URLs are set to the UAT endpoints:
+   - To switch to the **Live** environment, update the URLs to the live server's endpoints:
+   
+
+3. **Save the changes**: After making the necessary changes, save the `api_helper.py` file.
+
+4. **The application will now connect to the updated environment**: Once saved, the application will connect to either the UAT or Live server based on your updated configuration.
+
 Thereon provide your credentials and login as follows.
 
 ```python
