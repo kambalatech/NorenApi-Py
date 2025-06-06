@@ -11,11 +11,12 @@ logging.basicConfig(level=logging.DEBUG)
 api = NorenApiPy()
 
 #credentials
-with open('..\\cred.yml') as f:
+with open('cred.yml') as f:
     cred = yaml.load(f, Loader=yaml.FullLoader)
     print(cred)
 
-ret = api.login(userid = cred['user'], password = cred['pwd'], twoFA=cred['factor2'], vendor_code=cred['vc'], api_secret=cred['apikey'], imei=cred['imei'])
+#ret = api.login(userid = cred['user'], password = cred['pwd'], twoFA=cred['factor2'], vendor_code=cred['vc'], api_secret=cred['apikey'], imei=cred['imei'])
+injected_headers = api.injectOAuthHeader(cred['Access_token'],cred['UID'],cred['Account_ID'])
 
 ret = api.place_order(buy_or_sell='B', product_type='C',
                         exchange='NSE', tradingsymbol='CANBK-EQ', 

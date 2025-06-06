@@ -1,6 +1,6 @@
-user    : '0000001'
-pwd     : 'Abc@1234'
-factor2 : 'AAAAAAAAAA'
-vc      : 'NIKHESHP'
-apikey  : 'test123api'
-imei    : 'ag3tbbbb33'
+API_KEY: APP-2468-QRST-1357-UVWX
+Access_token: 3045d94588157b848d6727f45562588997b335cc7dd7f321efe7ff0c20b2afea
+Account_ID: HARDHIK
+SECRET_KEY: MyS3cure!P@ss9876543210ZYXW
+UID: HARDHIK
+oauth_url: https://test.kambala.co.in/NorenWeb2.0/authorize/oauth

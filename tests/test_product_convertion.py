@@ -18,7 +18,9 @@ with open('..\\cred.yml') as f:
 #ret = api.login(userid = cred['user'], password = cred['pwd'], twoFA=cred['factor2'], vendor_code=cred['vc'], api_secret=cred['apikey'], imei=cred['imei'])
 
 usersession='094b87ffc2de10a9c1dd03fe1613e133a1bd358f3a94db428249e7a794197838'
-ret = api.set_session(userid= cred['user'], password = cred['pwd'], usertoken= usersession)
+#ret = api.set_session(userid= cred['user'], password = cred['pwd'], usertoken= usersession)
+injected_headers = api.injectOAuthHeader(cred['Access_token'],cred['UID'],cred['Account_ID'])
+
 ret = api.get_positions()
 
 p = ret[0]

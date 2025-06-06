@@ -9,6 +9,7 @@ today = dt.datetime.today().strftime("%b%d")
 import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from api_helper import NorenApiPy
+import yaml
 
 #logging.basicConfig(level=logging.DEBUG)
 api = NorenApiPy()
@@ -23,7 +24,11 @@ creds['imei'] = 'imei-ka'
 token = ''
 creds['factor2'] = pyotp.TOTP(token).now()
 
+with open('cred.yml') as f:
+    cred = yaml.load(f, Loader=yaml.FullLoader)
+    print(cred)
 
+"""
 def login():
     _session = api.login(
         userid=creds.get('user'),
@@ -42,6 +47,8 @@ def login():
         logging.warning("login failed")
         logging.debug(_session)
         sys.exit(1)
+"""
+injected_headers = api.injectOAuthHeader(cred['Access_token'],cred['UID'],cred['Account_ID'])
 
 def logout():
     if ret := api.logout()["stat"] == "Ok":
@@ -51,7 +58,7 @@ def logout():
         logging.debug(ret)
 
 
-login()
+#login()
 
 tick = time.time()
 ret = api.place_order(

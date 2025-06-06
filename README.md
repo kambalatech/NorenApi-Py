@@ -7,14 +7,17 @@ Api used to connect to NorenOMS
 
 to build this package and install it on your server please use 
 
-``` pip install NorenRestApi ```
+``` pip install NorenRestApiOAuth ```
 
 
 ****
 
 ## API 
 ```NorenApi```
-- [login](#md-login)
+<!-- [login](#md-login) -->
+- [getOAuthURL](#md-getOAuthURL)
+- [getAccessToken](#md-getAccessToken)
+- [injectOAuthHeader](#md-injectOAuthHeader)
 - [logout](#md-logout)
 - [Forgot_Password_OTP](#md-forgotpasswordOTP)
 
@@ -62,7 +65,7 @@ Example
 - [getting started](#md-example-basic)
 - [Market Functions](#md-example-market)
 - [Orders and Trade](#md-example-orders)
-
+<!--
 #### <a name="md-login"></a> login(userid, password, twoFA, vendor_code, api_secret, imei)
 connect to the broker, only once this function has returned successfully can any other operations be performed
 Example: 
@@ -122,6 +125,40 @@ Sample Failure Response :
     "stat": "Not_Ok",
     "emsg": "Invalid Input : Wrong Password"
 }
+-->
+
+#### <a name="md-getOAuthURL"></a> getOAuthURL(cred['oauth_url'],cred['API_KEY'])
+Gets the oauth_url and API_KEY from cred.yaml file. (To be updated maually for the first time.)
+Returns the OAuth login URL.
+Use the retrned URL to obtain the authentication code from redirected URL after successful login.
+Save the authentication code to a varibale to obtain the access token.
+
+Example:
+```
+apikey_url = api.getOAuthURL(cred['oauth_url'],cred['API_KEY'])
+```
+
+#### <a name="md-getAccessToken"></a> getAccessToken(auth_code,cred['SECRET_KEY'],cred['API_KEY'],cred['UID'])
+Gets the SECRET_KEY, API_KEY and UID from cred.yaml file. (To be updated maually for the first time.)
+The auth_code is be supplied by user after getOAuthURL login flow
+Returns the generated access token along with user id, refresh token & account id.
+Access token will be used for all subsequent API calls.
+This function will automatically append to or overwrite the Access_token & Account_ID fileds in cred.yaml file.
+
+Example:
+```
+acc_tok, usrid, ref_tok, actid =  api.getAccessToken(auth_code,cred['SECRET_KEY'],cred['API_KEY'],cred['UID'])
+```
+
+#### <a name="md-injectOAuthHeader"></a> api.injectOAuthHeader(cred['Access_token'],cred['UID'],cred['Account_ID'])
+Gets the Access_token, UID and Account_ID from cred.yaml file. 
+Updates the http post request header with the Access_token.
+This header will be used in all seubsequent api calls.
+
+Example:
+```
+injected_headers = api.injectOAuthHeader(cred['Access_token'],cred['UID'],cred['Account_ID'])
+```
 
 #### <a name="md-logout"></a> logout()
 Terminate the session
