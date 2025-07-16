@@ -26,12 +26,15 @@ auth_code = "your_auth_code_here"
 if auth_code == "your_auth_code_here":
     auth_code = input("Enter your auth code here: ")
 
-acc_tok, usrid, ref_tok, actid =  api.getAccessToken(auth_code,cred['SECRET_KEY'],cred['API_KEY'],cred['UID'])
-logging.info(f"""\nAccess token is : {acc_tok} \nRefresh token is : {ref_tok} \nUser ID token is : {usrid} \nAccount ID is : {actid} \n""")
-
-# Update values
-cred['Access_token'] = acc_tok
-cred['Account_ID'] = actid
+result = api.getAccessToken(auth_code, cred['SECRET_KEY'], cred['API_KEY'], cred['UID'])
+if result is not None:
+    acc_tok, usrid, ref_tok, actid = result
+    logging.info(f"""\nAccess token is : {acc_tok} \nRefresh token is : {ref_tok} \nUser ID token is : {usrid} \nAccount ID is : {actid} \n""")
+    # Update values
+    cred['Access_token'] = acc_tok
+    cred['Account_ID'] = actid
+else:
+    print("Failed to retrieve access token.")
 
 # Log the updated credentials (optional)
 logging.info(cred)
