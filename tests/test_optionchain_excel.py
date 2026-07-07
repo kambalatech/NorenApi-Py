@@ -89,7 +89,7 @@ if __name__=="__main__":
     api = NorenApiPy()
 
     #yaml for parameters
-    with open('..\\cred.yml') as f:
+    with open('../cred.yml') as f:
         cred = yaml.load(f, Loader=yaml.FullLoader)
         print(cred)
 

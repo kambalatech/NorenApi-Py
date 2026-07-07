@@ -12,7 +12,7 @@ logging.basicConfig(level=logging.DEBUG)
 api = NorenApiPy()
 
 #use following if yaml isnt used
-user    = "NIKHESHP"
+user    = "TEST"
 pan     = "1e7163434fd46c81744a41c49aaee00e297fc1a1bce4635bf3676a34aea524a6"
 
 #userid, pan, dob

@@ -1,4 +1,4 @@
-from NorenRestApiOAuth.NorenApi import  NorenApi
+from NorenRestApiPy.NorenApi import  NorenApi
 from threading import Timer
 import pandas as pd
 import time

@@ -13,7 +13,7 @@ logging.basicConfig(level=logging.DEBUG)
 api = NorenApiPy()
 
 #credentials
-with open('/home/ubuntu/Desktop/Noren/NorenApi-Py-main/cred.yml') as f:
+with open('../cred.yml') as f:
     cred = yaml.load(f, Loader=yaml.FullLoader)
     print(cred)
 

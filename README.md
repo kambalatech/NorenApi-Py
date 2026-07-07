@@ -61,6 +61,9 @@ Annexure
 - [Order Type](#md-order_type)
 - [Product Type](#md-product_type)
 
+Basic Market Info
+- [exch_msg](#md-exch_msg)
+
 Example
 - [getting started](#md-example-basic)
 - [Market Functions](#md-example-market)
@@ -2132,6 +2135,46 @@ Accept for t, e, and tk other fields may / may not be present.
 
 #### <a name="md-unsubscribe"></a> unsubscribe()
 send a list of instruments to stop watch
+
+
+#### <a name="md-exch_msg"></a>exch_msg(exchange)
+
+Request Details :
+
+|Python Parameters|Json Fields|Possible value|Description|
+| --- | --- | --- | ---|
+|exchange|exch*||Exchange Name|
+
+Example: 
+
+```
+ret = api.exch_msg(exchange ='NSE')
+```
+
+Response Details :
+
+
+|Json Fields|Possible value|Description|
+|stat|Ok or Not_Ok|success or failure indication.|
+|request_time||This will be present only in a failure response.|
+|exch_tm||Exchange timestamp|
+|exch||Exchange|
+|exch_msg||Exchange message|
+
+Sample Success Response :
+
+{
+ "stat": "Ok",
+ "exch_tm": "19-03-2026 09:40:00",
+ "exch": "NSE",
+ "exch_msg": "The regular segment has opened for 19 MAR 2026."
+}
+
+Sample Failure Response :
+{
+ "stat":"Not_Ok",
+ "emsg":"Session Expired : Invalid Session Key"
+}
 
 #### <a name="md-alert_type"></a>Alert Type:
 

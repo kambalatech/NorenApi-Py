@@ -64,7 +64,7 @@ def get_time(time_string):
 api = NorenApiPy()
 
 #yaml for parameters
-with open('..\\cred.yml') as f:
+with open('../cred.yml') as f:
     cred = yaml.load(f, Loader=yaml.FullLoader)
     print(cred)
 
