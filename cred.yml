@@ -1,6 +1,6 @@
 Access_token: 82f3febd51cdb0be101d941391d0d000d6419c914807389136f5184f1442ee0c
-Account_ID: ANNAPPAINV
-Secret_Code: qtaUOB3IT0KqGeb6T0QvXFWHKSFcuWvcdXpEHi70hLEjsvQOpB0Tx6jhQNQvy5dN
-UID: ANNAPPAINV
-client_id: ANNAPPAINV_U
-oauth_url: https://rama.kambala.co.in/NorenWeb2.0/authorize/oauth
+Account_ID: DEMO
+Secret_Code: qtaUOB3IT0KqGeb6T0QvXFWHXpEHi70hLEjsvQOpB0Tx6jhQNQvy5dN
+UID: DEMO
+client_id: DEMO_U
+oauth_url: https://api.kambala.co.in/NorenWeb2.0/authorize/oauth
