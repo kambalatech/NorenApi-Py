@@ -18,6 +18,6 @@ with open('../cred.yml') as f:
 #ret = api.login(userid = cred['user'], password = cred['pwd'], twoFA=cred['factor2'], vendor_code=cred['vc'], api_secret=cred['apikey'], imei=cred['imei'])
 injected_headers = api.injectOAuthHeader(cred['Access_token'],cred['UID'],cred['Account_ID'])
 
-ret = api.linked_scrips(token = 22,exchange = 'NSE')
+ret = api.linked_scrips(token = "22",exchange = "NSE")
 
 print(ret)

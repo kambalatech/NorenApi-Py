@@ -39,7 +39,7 @@ def get_time(time_string):
 
 class NorenApiPy(NorenApi):
     def __init__(self):
-        NorenApi.__init__(self, host='https://rama.kambala.co.in/NorenWClientTP/', websocket='wss://rama.kambala.co.in/NorenWS/')
+        NorenApi.__init__(self, host='https://api.kambala.co.in/NorenWClientTP/', websocket='wss://api.kambala.co.in/NorenWS/')
         global api
         api = self
     def place_basket(self, orders):
